@@ -43,6 +43,19 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6acff5da-24d4-4b07-a5ed-7d3870e84fbc"
+      }
+    },
+    "owner": "chizanum",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/6acff5da-24d4-4b07-a5ed-7d3870e84fbc"
     }
   }
 }
