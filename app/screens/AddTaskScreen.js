@@ -1,3 +1,6 @@
+// Screen: AddTaskScreen
+// Allows the user to create a new task with title, description, priority and optional due date.
+// Tasks are persisted to AsyncStorage under `STORAGE_KEY`.
 import React, { useState } from "react";
 import {
   View,
@@ -12,22 +15,26 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+// AsyncStorage key used by this screen (keeps parity with the rest of the app)
 const STORAGE_KEY = "@tasks";
 
 export default function AddTaskScreen({ navigation }) {
+  // Local form state for the new task
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("medium");
   const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState(null);
+  const [dueDate, setDueDate] = useState(null); // Date or null
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const saveTask = async () => {
+    // Basic validation: title is required
     if (!title.trim()) {
       Alert.alert("Please enter a task title");
       return;
     }
 
     try {
+      // Load existing tasks, create newTask object and persist
       const stored = await AsyncStorage.getItem(STORAGE_KEY);
       const tasks = stored ? JSON.parse(stored) : [];
 
@@ -43,6 +50,7 @@ export default function AddTaskScreen({ navigation }) {
       const updatedTasks = [newTask, ...tasks];
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedTasks));
 
+      // Reset form and navigate back to the tasks list
       setTitle("");
       setPriority("medium");
       setDescription("");
@@ -53,9 +61,12 @@ export default function AddTaskScreen({ navigation }) {
     }
   };
 
+  // Handler for DateTimePicker: hides the picker and stores the selected date.
+  // Guard clause handles the 'dismissed' event on Android.
   const onChangeDate = (event, selectedDate) => {
     setShowDatePicker(false);
-    if (event.type === "dismissed") return;
+    if (event?.type === "dismissed") return;
+    if (!selectedDate) return;
     setDueDate(selectedDate);
   };
 

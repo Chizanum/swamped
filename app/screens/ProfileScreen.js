@@ -1,3 +1,6 @@
+// Screen: ProfileScreen
+// Shows basic user profile information and statistics about tasks.
+// Also allows saving a username to AsyncStorage under `NAME_KEY`.
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -11,6 +14,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// Keys used for AsyncStorage persistence
 const TASKS_KEY = "@tasks";
 const NAME_KEY = "@username";
 
@@ -20,11 +24,13 @@ export default function ProfileScreen() {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
+    // Load persisted data when the screen mounts
     loadTasks();
     loadUserName();
   }, []);
 
   const loadTasks = async () => {
+    // Read tasks from AsyncStorage and set local state
     try {
       const stored = await AsyncStorage.getItem(TASKS_KEY);
       if (stored) setTasks(JSON.parse(stored));
@@ -35,6 +41,7 @@ export default function ProfileScreen() {
   };
 
   const loadUserName = async () => {
+    // Retrieve stored username (if any)
     try {
       const storedName = await AsyncStorage.getItem(NAME_KEY);
       if (storedName) setUserName(storedName);
@@ -44,6 +51,7 @@ export default function ProfileScreen() {
   };
 
   const saveUserName = async (name) => {
+    // Persist the username and give user feedback
     try {
       await AsyncStorage.setItem(NAME_KEY, name);
       Alert.alert("Name saved!");
@@ -52,6 +60,7 @@ export default function ProfileScreen() {
     }
   };
 
+  // Compute tasks to show based on filter toggle
   const filteredTasks = tasks.filter((task) =>
     viewCompleted ? task.completed : !task.completed
   );

@@ -1,3 +1,6 @@
+// Screen: TaskListScreen
+// Displays the list of tasks, supports filtering, editing, deleting and marking complete.
+// Tasks are persisted in AsyncStorage under `STORAGE_KEY` and loaded when the screen is focused.
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -16,17 +19,19 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+// Storage key and available filters for the list view
 const STORAGE_KEY = "@tasks";
 const FILTERS = ["All", "Urgent", "Normal", "Completed"];
 
 export default function TaskListScreen() {
-  const [tasks, setTasks] = useState([]);
-  const [filter, setFilter] = useState("All");
-  const [editingTask, setEditingTask] = useState(null);
+  // Component state
+  const [tasks, setTasks] = useState([]); // array of task objects
+  const [filter, setFilter] = useState("All"); // current filter tab
+  const [editingTask, setEditingTask] = useState(null); // task being edited
   const [editingTitle, setEditingTitle] = useState("");
   const [editingDescription, setEditingDescription] = useState("");
   const [editingPriority, setEditingPriority] = useState("medium");
-  const [editingDueDate, setEditingDueDate] = useState(null);
+  const [editingDueDate, setEditingDueDate] = useState(null); // Date or null
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const loadTasks = async () => {
@@ -53,6 +58,7 @@ export default function TaskListScreen() {
     }
   };
 
+  // Compute the list of tasks that match the active filter
   const filteredTasks = tasks.filter((task) => {
     switch (filter) {
       case "Urgent":
@@ -68,6 +74,7 @@ export default function TaskListScreen() {
   });
 
   const toggleCompleted = (id) => {
+    // Toggle the completed flag for a task and persist the change
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
@@ -76,6 +83,7 @@ export default function TaskListScreen() {
   };
 
   const deleteTask = (id) => {
+    // Remove a task by id and persist
     const updatedTasks = tasks.filter((task) => task.id !== id);
     setTasks(updatedTasks);
     saveTasks(updatedTasks);
@@ -118,9 +126,12 @@ export default function TaskListScreen() {
     setShowDatePicker(false);
   };
 
+  // Date picker handler used when editing a task's due date.
+  // It hides the picker and updates the editingDueDate state.
   const onChangeDate = (event, selectedDate) => {
     setShowDatePicker(false);
-    if (event.type === "dismissed") return;
+    if (event?.type === "dismissed") return;
+    if (!selectedDate) return;
     setEditingDueDate(selectedDate);
   };
 
