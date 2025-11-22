@@ -1,50 +1,72 @@
-# Welcome to your Expo app 👋
+# Task Manager Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple mobile task manager built with React Native and Expo. Manage tasks with due dates, priorities, descriptions, and user profile with theming support.
 
-## Get started
+---
 
-1. Install dependencies
+## Features
 
-   ```bash
-   npm install
-   ```
+- Add, edit, delete, and complete tasks  
+- Store tasks persistently using AsyncStorage  
+- Filter tasks by status (All, Current, Completed, Urgent, Normal)  
+- User profile with editable name and task counts  
+- Light and dark theme switching  
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+## Installation
 
-In the output, you'll find options to open the app in a
+1. Clone the repo:  
+   `git clone <repo-url>`
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+2. Install dependencies:  
+   `npm install` or `yarn`
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+3. Start the development server:  
+   `npx expo start`
 
-## Get a fresh project
+4. Use Expo Go or an emulator to run the app
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+## Project Structure
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- `/app/index.js` — Main entry, sets up bottom tabs and context providers  
+- `/app/contexts/ThemeContext.js` — Manages light/dark theme state globally  
+- `/app/contexts/TasksContext.js` — Manages tasks and persistence globally  
+- `/app/screens/TaskListScreen.js` — Task list UI with filtering, editing, and completion  
+- `/app/screens/AddTaskScreen.js` — UI for adding new tasks  
+- `/app/screens/ProfileScreen.js` — User profile and theme settings  
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## Usage
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- Navigate between tabs to view tasks, add tasks, or update profile  
+- Tap tasks to mark complete/incomplete  
+- Use edit buttons to modify tasks  
+- Profile tab lets you update your name and toggle app theme
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## Technologies Used
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- React Native  
+- Expo  
+- AsyncStorage for persistence  
+- React Navigation for navigation  
+- React Context API for global state  
+
+---
+
+## Contributing
+
+Feel free to fork and submit pull requests for improvements or bug fixes.
+
+---
+
+## License
+
+MIT License
+
+---
