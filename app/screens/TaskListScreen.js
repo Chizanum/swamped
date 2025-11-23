@@ -33,6 +33,7 @@ export default function TaskListScreen() {
   const [editingPriority, setEditingPriority] = useState("medium");
   const [editingDueDate, setEditingDueDate] = useState(null); // Date or null
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const activeCount = tasks.filter((task) => !task.completed).length;
 
   const loadTasks = async () => {
     try {
@@ -136,6 +137,7 @@ export default function TaskListScreen() {
   };
 
   const renderItem = ({ item }) => (
+    
     <View style={styles.taskItem}>
       <TouchableOpacity
         onPress={() => toggleCompleted(item.id)}
@@ -166,6 +168,21 @@ export default function TaskListScreen() {
 
   return (
     <View style={styles.container}>
+
+       
+      <View style={styles.section1}>
+        <Text style={styles.title}>Swamped</Text>
+
+        <View style={styles.activeTasks}>
+          <Text style={styles.activeTasksCount}>{activeCount}</Text>
+          <Text style={styles.activeTasksTitle}>Active tasks</Text>
+        </View>
+
+        <View style={styles.lineBlock}></View>
+      </View>
+      <View style={styles.section2}></View>
+      <View style={styles.section3}></View>
+
       {/* Filter Tabs */}
       <View style={styles.filterContainer}>
         {FILTERS.map((f) => (
@@ -188,6 +205,7 @@ export default function TaskListScreen() {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ListEmptyComponent={<Text style={{ textAlign: "center" }}>No tasks</Text>}
+        style={styles.list}
       />
 
       {/* Edit Modal */}
@@ -253,8 +271,47 @@ export default function TaskListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20 },
+
+
+  section1: {
+    flex:2,
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+
+
+
+  title: { fontWeight: "bold", fontSize: 25 },
+
+  activeTasks: {
+    backgroundColor: "#a0a0a0ff",
+    width: 170,
+    height: 170,
+    borderRadius: 99,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  activeTasksCount: { fontWeight: "bold", fontSize: 50 },
+
+  activeTasksTitle: { fontSize: 20 },
+
+  lineBlock: {
+    width: 100,
+    height: 10,
+    borderRadius: 20,
+    backgroundColor: "#000",
+  },
+
+  list: {
+    maxHeight:300,
+  },
   taskItem: {
-    backgroundColor: "#eee",
+    backgroundColor: "#afafafff",
+    borderWidth: 1,
+    borderColor: "#040404ff",
     padding: 15,
     marginBottom: 10,
     borderRadius: 8,
@@ -284,11 +341,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "#040404ff",
   },
   filterTabActive: {
-    backgroundColor: "#2f95dc",
-    borderColor: "#2f95dc",
+    backgroundColor: "#000000ff",
+    borderColor: "#000000ff",
   },
   filterText: {
     color: "#444",

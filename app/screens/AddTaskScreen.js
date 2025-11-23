@@ -83,18 +83,31 @@ export default function AddTaskScreen({ navigation }) {
         placeholder="Task description"
         value={description}
         onChangeText={setDescription}
-        style={[styles.input, { height: 80 }]}
+        style={[styles.inputDes, { height: 80 }]}
         multiline
       />
 
       <View style={styles.priorityContainer}>
         {["low", "medium", "high"].map((level) => (
-          <Button
-            key={level}
-            title={level.charAt(0).toUpperCase() + level.slice(1)}
-            color={priority === level ? "#2f95dc" : "gray"}
-            onPress={() => setPriority(level)}
-          />
+          <TouchableOpacity
+  key={level}
+  onPress={() => setPriority(level)}
+  style={{
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: priority === level ? "#000000ff" : "black",
+    borderRadius: 20,
+    backgroundColor: priority === level ? "#fff" : "black",
+  }}
+>
+  <Text style={{
+    color: priority === level ? "#000" : "white",
+    fontWeight: "600"
+  }}>
+    {level.charAt(0).toUpperCase() + level.slice(1)}
+  </Text>
+</TouchableOpacity>
         ))}
       </View>
 
@@ -118,19 +131,40 @@ export default function AddTaskScreen({ navigation }) {
         />
       )}
 
-      <Button title="Add Task" onPress={saveTask} />
+     <TouchableOpacity
+  onPress={saveTask}
+  style={{
+    backgroundColor: "#000",
+    paddingVertical: 14,
+    borderRadius: 25,
+    alignItems: "center",
+    marginTop: 10
+  }}
+>
+  <Text style={{ color: "white", fontSize: 16, fontWeight: "600" }}>
+    Add Task
+  </Text>
+</TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
+  container: { flex: 1, paddingInline: 30, paddingBlock:20 },
   input: {
     borderBottomWidth: 1,
     marginBottom: 20,
     paddingVertical: 8,
     fontSize: 16,
   },
+
+  inputDes: {
+    borderWidth: 1,
+    marginBlock: 20,
+    paddingVertical: 8,
+    fontSize: 16,
+  },
+
   priorityContainer: {
     flexDirection: "row",
     justifyContent: "space-around",

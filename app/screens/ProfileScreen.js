@@ -13,6 +13,7 @@ import {
   Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 // Keys used for AsyncStorage persistence
 const TASKS_KEY = "@tasks";
@@ -28,6 +29,13 @@ export default function ProfileScreen() {
     loadTasks();
     loadUserName();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadTasks();
+      loadUserName();
+    }, [])
+  );
 
   const loadTasks = async () => {
     // Read tasks from AsyncStorage and set local state
@@ -150,7 +158,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     backgroundColor: "white",
   },
-  filterBtnActive: { backgroundColor: "#2f95dc", borderColor: "#2f95dc" },
+  filterBtnActive: { backgroundColor: "#000000ff", borderColor: "#000000ff" },
   filterText: { textAlign: "center", color: "#444" },
   filterTextActive: { color: "white", fontWeight: "bold" },
   taskItem: {
